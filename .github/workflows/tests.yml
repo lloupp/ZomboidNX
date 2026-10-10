@@ -9,11 +9,25 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: Compile syntax
         run: python -m compileall -q tools tests
       - name: Run synthetic tests
         run: python -m unittest discover -s tests -v
+
+  switch-build:
+    runs-on: ubuntu-latest
+    container: devkitpro/devkita64:latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build Switch diagnostic (.nro)
+        run: make
+      - uses: actions/upload-artifact@v7
+        with:
+          name: zomboidnx-nro
+          path: zomboidnx.nro
