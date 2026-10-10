@@ -1,5 +1,7 @@
 # Build output
 build/
+out/
+_switch-examples/
 *.nro
 *.elf
 *.nacp
