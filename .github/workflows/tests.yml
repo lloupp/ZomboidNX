@@ -1,0 +1,19 @@
+name: Metadata scanner tests
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile syntax
+        run: python -m compileall -q tools tests
+      - name: Run synthetic tests
+        run: python -m unittest discover -s tests -v
