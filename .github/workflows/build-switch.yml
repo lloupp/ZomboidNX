@@ -41,7 +41,9 @@ jobs:
         run: |
           set -euo pipefail
           test -n "${DEVKITPRO:-}"
-          test -f "$DEVKITPRO/libnx/switch_rules"
+          export DEVKITA64="$DEVKITPRO/devkitA64"
+          export PATH="$DEVKITA64/bin:$PATH"
+          echo "DEVKITPRO=$DEVKITPRO DEVKITA64=$DEVKITA64"
           command -v aarch64-none-elf-gcc
           aarch64-none-elf-gcc --version | head -n 1
 
