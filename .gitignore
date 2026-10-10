@@ -1,0 +1,28 @@
+# Build output
+build/
+*.nro
+*.elf
+*.nacp
+*.nso
+*.nsp
+
+# Inventory outputs and accidental game content
+zomboid-inventory.json
+*.jar
+*.dll
+*.so
+*.dylib
+*.exe
+*.pak
+*.class
+media/
+steamapps/
+ProjectZomboid/
+
+# Python
+__pycache__/
+*.pyc
+
+# Local workspace
+.DS_Store
+.vscode/
