@@ -52,7 +52,7 @@ CI also builds the `.nro` on every push and uploads it as the `zomboidnx-nro` ar
 
 Copy `zomboidnx.nro` to `sdmc:/switch/zomboidnx.nro`. In Atmosphère, launch hbmenu in **title override** for full application resources. Press `A` for a 16 MiB RAM allocation test, `B` to look for `sdmc:/switch/zomboidnx/game-manifest.txt`, and `+` to exit.
 
-**Build/console status:** a standalone `Makefile` and a CI build job exist, but a successful toolchain build and testing on a physical Switch have not yet been confirmed.
+**Build/console status:** the `.nro` builds cleanly (no compiler warnings) in CI with `devkitpro/devkita64`. It has **not** yet been tested on a physical Switch.
 
 ## Tests
 
