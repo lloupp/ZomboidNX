@@ -1,0 +1,60 @@
+name: Build Switch diagnostic NRO
+
+on:
+  push:
+    branches:
+      - main
+      - feasibility-2026-10-09
+    paths:
+      - 'source/**'
+      - 'scripts/build-nro.sh'
+      - '.github/workflows/build-switch.yml'
+  pull_request:
+    paths:
+      - 'source/**'
+      - 'scripts/build-nro.sh'
+      - '.github/workflows/build-switch.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: devkitpro/devkita64:20260219
+    steps:
+      - name: Checkout ZomboidNX
+        uses: actions/checkout@v4
+
+      - name: Checkout official Switch template
+        uses: actions/checkout@v4
+        with:
+          repository: switchbrew/switch-examples
+          ref: master
+          path: _switch-examples
+          persist-credentials: false
+
+      - name: Verify cross-compiler
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${DEVKITPRO:-}"
+          export DEVKITA64="$DEVKITPRO/devkitA64"
+          export PATH="$DEVKITA64/bin:$PATH"
+          echo "DEVKITPRO=$DEVKITPRO DEVKITA64=$DEVKITA64"
+          command -v aarch64-none-elf-gcc
+          aarch64-none-elf-gcc --version | head -n 1
+
+      - name: Build NRO
+        shell: bash
+        run: bash scripts/build-nro.sh
+
+      - name: Upload diagnostic NRO
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZomboidNX-diagnostic-NRO
+          path: out/zomboidnx.nro
+          if-no-files-found: error
+          retention-days: 14
