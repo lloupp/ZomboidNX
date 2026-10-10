@@ -17,3 +17,17 @@ jobs:
         run: python -m compileall -q tools tests
       - name: Run synthetic tests
         run: python -m unittest discover -s tests -v
+
+  switch-build:
+    runs-on: ubuntu-latest
+    container: devkitpro/devkita64:latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Switch diagnostic (.nro)
+        run: make
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zomboidnx-nro
+          path: zomboidnx.nro

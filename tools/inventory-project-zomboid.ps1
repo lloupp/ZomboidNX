@@ -9,7 +9,7 @@ $important = @('.jar', '.dll', '.so', '.dylib', '.json', '.exe')
 $items = @(Get-ChildItem -LiteralPath $folder -Recurse -File -ErrorAction Stop)
 $files = @($items | Where-Object { $important -contains $_.Extension.ToLowerInvariant() } | ForEach-Object {
     $relative = $_.FullName.Substring($folder.Length).TrimStart('\','/')
-    [PSCustomObject]@{ path = ($relative -replace '\','/'); bytes = $_.Length }
+    [PSCustomObject]@{ path = ($relative -replace '\\','/'); bytes = $_.Length }
 })
 $launchers = @($files | Where-Object { $_.path -match 'ProjectZomboid|projectzomboid|lwjgl|fmod|java' } | Select-Object -First 80)
 $report = [ordered]@{

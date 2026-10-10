@@ -36,19 +36,23 @@ Replace the path with the actual location selected by Steam → Library → Proj
 
 ## Step 2 — build the Switch diagnostic
 
-Install a compatible [devkitPro](https://devkitpro.org/) environment with `switch-dev`, `devkitA64`, and `libnx`. Use the current [switchbrew application template](https://github.com/switchbrew/switch-examples/tree/master/templates/application):
+Install a compatible [devkitPro](https://devkitpro.org/) environment with `switch-dev` (`devkitA64` + `libnx`), then from the repository root:
 
 ```bash
-# From a devkitPro-enabled shell, after cloning switch-examples:
-cp -R switch-examples/templates/application ./zomboidnx-build
-cp source/main.c ./zomboidnx-build/source/main.c
-cd zomboidnx-build
-make
+make            # produces zomboidnx.nro
 ```
 
-The application-template output name may differ; copy the produced `.nro` to `sdmc:/switch/zomboidnx.nro`. In Atmosphère, launch hbmenu in **title override** for full application resources. Press `A` for a 16 MiB RAM allocation test, `B` to look for `sdmc:/switch/zomboidnx/game-manifest.txt`, and `+` to exit.
+Or, with Docker and no local toolchain:
 
-**Build/console status:** the source has not been cross-compiled or verified on a physical Switch here. A real build requires the Nintendo Switch toolchain.
+```bash
+docker run --rm -v "$PWD":/src -w /src devkitpro/devkita64 make
+```
+
+CI also builds the `.nro` on every push and uploads it as the `zomboidnx-nro` artifact.
+
+Copy `zomboidnx.nro` to `sdmc:/switch/zomboidnx.nro`. In Atmosphère, launch hbmenu in **title override** for full application resources. Press `A` for a 16 MiB RAM allocation test, `B` to look for `sdmc:/switch/zomboidnx/game-manifest.txt`, and `+` to exit.
+
+**Build/console status:** a standalone `Makefile` and a CI build job exist, but a successful toolchain build and testing on a physical Switch have not yet been confirmed.
 
 ## Tests
 

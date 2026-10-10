@@ -6,7 +6,7 @@
 
 Compile the independent libnx test application with devkitPro. Launch it through hbmenu title override. Verify Joy-Con A/B/+ input, 16 MiB allocation, and optional read-only SD access.
 
-**Status:** code written; build and physical hardware validation **not done**.
+**Status:** code and standalone `Makefile` written; CI build job added (devkitpro/devkita64). Successful build and physical hardware validation **not yet confirmed**.
 
 ## Gate 1 — installed game inventory
 
