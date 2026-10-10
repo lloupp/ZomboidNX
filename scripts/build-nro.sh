@@ -5,6 +5,12 @@ set -euo pipefail
 
 ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 : "${DEVKITPRO:?Set DEVKITPRO (usually /opt/devkitpro) or run inside devkitpro/devkita64.}"
+export DEVKITA64="${DEVKITA64:-${DEVKITPRO}/devkitA64}"
+export PATH="${DEVKITA64}/bin:${PATH}"
+if ! command -v aarch64-none-elf-gcc >/dev/null 2>&1; then
+  echo "ERROR: devkitA64 compiler not found under ${DEVKITA64}/bin" >&2
+  exit 2
+fi
 
 TEMPLATE="${DEVKITPRO}/examples/switch/templates/application"
 if [[ ! -f "${TEMPLATE}/Makefile" ]]; then
